@@ -12,6 +12,7 @@
     "bcrypt": "^5.0.0",
     "cross-env": "^7.0.2",
     "esm": "^3.2.25",
+    "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
