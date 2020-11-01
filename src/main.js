@@ -2,13 +2,12 @@ import Koa from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
+import api from './api';
 
 const { PORT } = process.env;
 
 const router = new Router();
-router.get('/', (ctx) => {
-  ctx.body = 'hello!';
-});
+router.use('/api', api.routes());
 
 const app = new Koa();
 app.use(logger());
