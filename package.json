@@ -19,7 +19,8 @@
     "koa-bodyparser": "^4.3.0",
     "koa-logger": "^3.2.1",
     "koa-router": "^9.4.0",
-    "mongoose": "^5.10.10"
+    "mongoose": "^5.10.10",
+    "supertest": "^6.0.1"
   },
   "devDependencies": {
     "eslint": "^7.12.0",
