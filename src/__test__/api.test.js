@@ -1,6 +1,7 @@
 import httpStatus from 'http-status';
 import request from 'supertest';
 import { startServer, closeServer } from '../main';
+import { User } from '../models';
 
 describe('API TEST', () => {
   let server;
@@ -21,6 +22,12 @@ describe('API TEST', () => {
     describe('성공시 ', () => {
       const givenUsername = 'test-user';
       const givenPassword = 'test-password';
+
+      //테스트 후 cleanup
+      afterAll(async (done) => {
+        await User.remove({});
+        done();
+      });
 
       it('user 객체를 return한다.', (done) => {
         request(server)
