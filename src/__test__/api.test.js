@@ -1,0 +1,42 @@
+import httpStatus from 'http-status';
+import request from 'supertest';
+import { startServer, closeServer } from '../main';
+
+describe('API TEST', () => {
+  let server;
+
+  // 테스트를 수행하기 전, API를 구동
+  // supertest 모듈을 사용하여 이 API에 접근하여 테스트함
+  beforeAll(async (done) => {
+    server = await startServer();
+    done();
+  });
+  // 모든 테스트를 마친 후, API서버를 종료함.
+  afterAll(async (done) => {
+    await closeServer(server);
+    done();
+  });
+
+  describe('POST /api/register는', () => {
+    describe('성공시 ', () => {
+      const givenUsername = 'test-user';
+      const givenPassword = 'test-password';
+
+      it('user 객체를 return한다.', (done) => {
+        request(server)
+          .post('/api/register')
+          .send({
+            username: givenUsername,
+            password: givenPassword,
+          })
+          .expect(httpStatus.CREATED)
+          .then((res) => {
+            const { _id, username } = res.body;
+            expect.anything(_id);
+            expect(username).toBe(givenUsername);
+            done();
+          });
+      });
+    });
+  });
+});
