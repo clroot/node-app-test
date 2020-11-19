@@ -45,5 +45,40 @@ describe('API TEST', () => {
           });
       });
     });
+
+    describe('실패시 ', () => {
+      it('username과 password가 전달되지 않으면 BAD_REQUEST', (done) => {
+        request(server)
+          .post('/api/register')
+          .send({})
+          .expect(httpStatus.BAD_REQUEST)
+          .end(done);
+      });
+
+      describe('username 중복 시 ', () => {
+        const givenUsername = 'test-user';
+        const givenPassword = 'test-password';
+
+        beforeAll(async (done) => {
+          await request(server).post('/api/register').send({
+            username: givenUsername,
+            password: givenPassword,
+          });
+          done();
+        });
+        afterAll(async (done) => {
+          await User.remove({});
+          done();
+        });
+
+        it('CONFLICT', (done) => {
+          request(server)
+            .post('/api/register')
+            .send({ username: givenUsername, password: 'some-other-password' })
+            .expect(httpStatus.CONFLICT)
+            .end(done);
+        });
+      });
+    });
   });
 });
